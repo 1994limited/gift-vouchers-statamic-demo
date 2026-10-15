@@ -1,0 +1,7 @@
+uk:
+  title: 'United Kingdom'
+  type: countries
+  countries:
+    - GBR
+  rates:
+    general: 20

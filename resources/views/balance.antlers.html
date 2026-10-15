@@ -1,0 +1,25 @@
+<div style="max-width:520px">
+    <h1>Check a gift voucher</h1>
+    <p class="muted">Find out how much is left on a Paper &amp; Ink gift voucher, and when it needs to be used by.</p>
+
+    {{ gift_vouchers:balance }}
+        <div class="card" role="status" style="margin:20px 0">
+            <span class="tag">Voucher {{ code }}</span>
+            <p style="font-family:Georgia,serif; font-size:2.4rem; margin:0">{{ balance_formatted }}</p>
+            <p class="muted" style="margin:4px 0 0">
+                {{ if is_usable }}left to spend{{ if expires_formatted }}, by {{ expires_formatted }}{{ /if }}.
+                {{ elseif is_expired }}This voucher expired on {{ expires_formatted }}.
+                {{ else }}{{ status_label }}.{{ /if }}
+            </p>
+        </div>
+    {{ /gift_vouchers:balance }}
+
+    {{ gift_vouchers:check }}
+        <label for="code">Voucher code</label>
+        <div class="inline">
+            <input type="text" id="code" name="code" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX-XXXX" required aria-describedby="code-error">
+            <button type="submit">Check</button>
+        </div>
+        {{ if errors:code }}<p class="error" id="code-error" role="alert">{{ errors:code }}</p>{{ /if }}
+    {{ /gift_vouchers:check }}
+</div>

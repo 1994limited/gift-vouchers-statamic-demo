@@ -1,0 +1,6 @@
+<a class="card" href="{{ url }}" style="text-decoration:none; display:block;">
+    {{ if image }}<img src="{{ image:url }}" alt="" width="400" height="400" style="width:100%; height:auto; border-radius:6px; margin-bottom:14px; display:block;">{{ /if }}
+    {{ if {gift_vouchers:is_voucher :product="id"} }}<span class="tag">Gift voucher</span>{{ /if }}
+    <h3>{{ title }}</h3>
+    <span class="price">{{ if voucher_amount_type == 'open' }}From {{ voucher_min }}{{ else }}{{ price }}{{ /if }}</span>
+</a>

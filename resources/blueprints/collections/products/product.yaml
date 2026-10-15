@@ -1,0 +1,38 @@
+title: Product
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+          -
+            handle: image
+            field:
+              type: assets
+              display: Image
+              container: assets
+              max_files: 1
+          -
+            handle: description
+            field:
+              type: markdown
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+          -
+            handle: price
+            field:
+              type: money
+              display: Price
+              validate: required

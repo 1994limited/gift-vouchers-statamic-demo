@@ -1,0 +1,6 @@
+default:
+  name: 'Paper & Ink'
+  url: /
+  locale: en_GB
+  attributes:
+    currency: GBP

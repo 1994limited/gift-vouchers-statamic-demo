@@ -1,0 +1,58 @@
+<h1>Your basket</h1>
+
+{{ if {gift_vouchers:success} }}<div class="notice ok" role="status">{{ gift_vouchers:success }}</div>{{ /if }}
+
+{{ if {cart:is_empty} }}
+    <p>Your basket is empty. <a href="/shop">Have a look round the shop</a>.</p>
+{{ else }}
+<div class="two">
+    <div>
+        <table class="lines">
+            <thead><tr><th>Item</th><th class="num">Price</th></tr></thead>
+            <tbody>
+            {{ cart:line_items }}
+                <tr>
+                    <td>
+                        <strong>{{ product:title }}</strong>{{ if quantity > 1 }} × {{ quantity }}{{ /if }}
+                        {{ if voucher_recipient_name || voucher_recipient_email }}
+                            <div class="muted">For {{ voucher_recipient_name | sanitize }}{{ if voucher_recipient_email }} &lt;{{ voucher_recipient_email | sanitize }}&gt;{{ /if }}</div>
+                        {{ /if }}
+                        {{ if voucher_send_on }}<div class="muted">Sent on {{ voucher_send_on | format('j F Y') }}</div>{{ /if }}
+                        {{ if voucher_message }}<div class="muted" style="font-style:italic">“{{ voucher_message | sanitize | truncate:80 }}”</div>{{ /if }}
+                        {{ cart:remove :line_item="id" class="line-remove" }}<button class="link" aria-label="Remove {{ product:title }}">Remove</button>{{ /cart:remove }}
+                    </td>
+                    <td class="num">{{ sub_total }}</td>
+                </tr>
+            {{ /cart:line_items }}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Have a gift voucher?</h2>
+        {{ gift_vouchers:redeem }}
+            <label for="code" class="hint" style="font-weight:normal">Enter the code from your voucher</label>
+            <div class="inline">
+                <input type="text" id="code" name="code" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX-XXXX" aria-describedby="code-error">
+                <button type="submit" class="quiet">Apply</button>
+            </div>
+            {{ if errors:code }}<p class="error" id="code-error" role="alert">{{ errors:code }}</p>{{ /if }}
+        {{ /gift_vouchers:redeem }}
+
+        <div class="totals">
+            <div><span>Subtotal</span><span>{{ cart:sub_total }}</span></div>
+            {{ gift_vouchers:applied }}
+                <div class="voucher-line">
+                    <span>Gift voucher {{ code }}
+                        {{ gift_vouchers:remove :voucher="id" class="inline-remove" }}<button class="link" aria-label="Remove gift voucher {{ code }}">Remove</button>{{ /gift_vouchers:remove }}
+                    </span>
+                    <span>−{{ amount_formatted }}</span>
+                </div>
+            {{ /gift_vouchers:applied }}
+            <div class="grand"><span>To pay</span><span>{{ cart:grand_total }}</span></div>
+            <p class="muted" style="font-size:.85rem">Including {{ cart:tax_total }} VAT.</p>
+        </div>
+        <p><a class="button" href="/checkout" style="width:100%; text-align:center">Checkout</a></p>
+    </div>
+</div>
+{{ /if }}

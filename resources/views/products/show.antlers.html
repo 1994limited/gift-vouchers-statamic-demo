@@ -1,0 +1,105 @@
+<p class="muted"><a href="/shop">Shop</a> / {{ title }}</p>
+
+{{ if {gift_vouchers:success} }}<div class="notice ok" role="status">{{ gift_vouchers:success }} <a href="/basket">View basket</a></div>{{ /if }}
+
+<div class="two">
+    <div>
+        {{ if {gift_vouchers:is_voucher :product="id"} }}
+            {{# The voucher as they'll get it, filled in as the form is. #}}
+            <div class="preview-sticky">
+                {{ gift_vouchers:preview }}
+                <p class="muted" style="font-size:.85rem; margin-top:14px">They get this by email, with a PDF to print. Your code is made when you pay.</p>
+            </div>
+        {{ else }}
+            {{ if image }}<img src="{{ image:url }}" alt="" width="400" height="400" style="width:100%; border-radius:10px;">{{ /if }}
+        {{ /if }}
+    </div>
+
+    <div>
+        <h1>{{ title }}</h1>
+        {{ description | markdown }}
+
+        {{ if {gift_vouchers:is_voucher :product="id"} }}
+            {{ gift_vouchers:form redirect="/basket" }}
+                {{ if is_open }}
+                    <div class="field">
+                        <label for="amount">Amount <span class="hint">{{ min_formatted }} to {{ max_formatted }}</span></label>
+                        {{ if suggested }}
+                            <div class="chips">
+                                {{ suggested }}<button type="button" class="quiet" data-gift-vouchers-amount="{{ value }}" hidden>{{ formatted }}</button>{{ /suggested }}
+                            </div>
+                        {{ /if }}
+                        <input type="text" inputmode="decimal" id="amount" name="amount" value="{{ old:amount ?? '50' }}" required aria-describedby="amount-error">
+                        {{ if errors:amount }}<p class="error" id="amount-error">{{ errors:amount }}</p>{{ /if }}
+                    </div>
+                {{ else }}
+                    <p class="price" style="font-size:1.4rem;">{{ price }}</p>
+                {{ /if }}
+
+                {{ if has_designs }}
+                    <fieldset class="field designs">
+                        <legend>Design</legend>
+                        {{ designs }}
+                            <label class="design">
+                                <input type="radio" name="design" value="{{ handle }}" {{ if is_selected }}checked{{ /if }}>
+                                <img src="{{ preview }}" alt="" width="240" height="240">
+                                <span>{{ name }}</span>
+                            </label>
+                        {{ /designs }}
+                    </fieldset>
+                {{ /if }}
+
+                <div class="row">
+                    <div class="field">
+                        <label for="recipient_name">Their name</label>
+                        <input type="text" id="recipient_name" name="recipient_name" value="{{ old:recipient_name }}" maxlength="{{ name_limit }}" autocomplete="off">
+                    </div>
+                    <div class="field">
+                        <label for="recipient_email">Their email <span class="hint">or leave empty to get it yourself</span></label>
+                        <input type="email" id="recipient_email" name="recipient_email" value="{{ old:recipient_email }}" autocomplete="off" aria-describedby="email-error">
+                        {{ if errors:recipient_email }}<p class="error" id="email-error">{{ errors:recipient_email }}</p>{{ /if }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="sender_name">From</label>
+                    <input type="text" id="sender_name" name="sender_name" value="{{ old:sender_name }}" maxlength="{{ name_limit }}">
+                </div>
+                <div class="field">
+                    <label for="message">Message <span class="hint">up to {{ message_limit }} characters</span></label>
+                    <textarea id="message" name="message" maxlength="{{ message_limit }}">{{ old:message }}</textarea>
+                </div>
+                <div class="field">
+                    <label for="send_on">Send it on <span class="hint">leave empty to send it when you pay</span></label>
+                    <input type="date" id="send_on" name="send_on" value="{{ old:send_on }}" min="{{ earliest_send_on }}" max="{{ latest_send_on }}" aria-describedby="date-error">
+                    {{ if errors:send_on }}<p class="error" id="date-error">{{ errors:send_on }}</p>{{ /if }}
+                </div>
+                {{ if errors:gift_vouchers && !errors:amount && !errors:recipient_email && !errors:send_on }}<p class="error" role="alert">{{ errors:gift_vouchers }}</p>{{ /if }}
+                <button type="submit">Add to basket</button>
+            {{ /gift_vouchers:form }}
+        {{ else }}
+            <p class="price" style="font-size:1.4rem;">{{ price }}</p>
+            {{ cart:add redirect="/basket" }}
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit">Add to basket</button>
+            {{ /cart:add }}
+        {{ /if }}
+    </div>
+</div>
+
+
+{{# Demo only: ?fill=1 fills the form in, for screenshots. #}}
+{{ if get:fill }}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('form[action*="gift-vouchers/cart/add"]');
+        const set = (name, value) => { const el = form.querySelector(`[name="${name}"]`); if (el) el.value = value; };
+        set('amount', '100.00');
+        set('recipient_name', 'Mary Somerville');
+        set('recipient_email', 'mary@example.com');
+        set('sender_name', 'Ada');
+        set('message', 'Happy birthday, Mary! Treat yourself to a proper pen.');
+        form.querySelector('[name="design"][value="birthday"]')?.click();
+        setTimeout(() => form.dispatchEvent(new Event('input', { bubbles: true })), 50);
+    });
+</script>
+{{ /if }}

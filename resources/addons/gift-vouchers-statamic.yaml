@@ -1,0 +1,29 @@
+accent_colour: '#1d2a44'
+terms: 'Gift vouchers can be spent on anything at Paper & Ink, online, until the date shown. They can be used over several orders. They can’t be exchanged for cash.'
+designs:
+  -
+    id: a1
+    name: Classic
+    style: engraved
+    colour: '#1d2a44'
+  -
+    id: a2
+    name: Birthday
+    title: 'Happy birthday'
+    style: engraved
+    motif: cake
+    colour: '#8a2b2b'
+  -
+    id: a3
+    name: 'Thank you'
+    title: 'With thanks'
+    style: engraved
+    motif: heart
+    colour: '#2f5d3a'
+  -
+    id: a4
+    name: Christmas
+    title: 'Merry Christmas'
+    style: engraved
+    motif: star
+    colour: '#7a5a12'

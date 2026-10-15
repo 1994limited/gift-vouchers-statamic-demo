@@ -1,0 +1,6 @@
+title: Products
+template: products/show
+revisions: false
+entry_class: DuncanMcClean\Cargo\Products\Product
+route: '/shop/{slug}'
+sort_dir: asc

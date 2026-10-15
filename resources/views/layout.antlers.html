@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="{{ site:short_locale }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ (title ?? site:name) | sanitize }} · {{ site:name }}</title>
+    <link rel="stylesheet" href="/css/shop.css">
+</head>
+<body>
+    <header class="site">
+        <div class="wrap">
+            <a class="brand" href="/">{{ site:name }}</a>
+            <nav class="main" aria-label="Main">
+                <a href="/shop">Shop</a>
+                <a href="/shop/gift-voucher">Gift vouchers</a>
+                <a href="/gift-vouchers/balance">Check a balance</a>
+                <a href="/basket">Basket</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="wrap">{{ template_content }}</div>
+    </main>
+    <footer class="site"><div class="wrap">{{ site:name }} is a demo shop for the Gift Vouchers addon. Nothing here is real.</div></footer>
+</body>
+</html>
