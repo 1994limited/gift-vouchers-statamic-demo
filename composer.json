@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "^8.3",
-        "1994/gift-vouchers-statamic": "dev-main",
+        "1994/gift-vouchers-statamic": "^1.0",
         "duncanmcclean/statamic-cargo": "^1.15",
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0",
