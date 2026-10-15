@@ -38,6 +38,12 @@ class DemoSeed extends Command
         // Nobody is emailed while seeding.
         config(['mail.default' => 'array']);
 
+        if (! $this->option('fresh') && Voucher::query()->exists()) {
+            $this->components->warn('The demo data is already there. Run `php artisan demo:seed --fresh` to make it again.');
+
+            return self::SUCCESS;
+        }
+
         if ($this->option('fresh')) {
             Order::all()->each->delete();
             Cart::all()->each->delete();
