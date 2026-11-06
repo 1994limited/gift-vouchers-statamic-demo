@@ -2,7 +2,7 @@
 
 A small, made-up stationery shop built with [Statamic](https://statamic.com), [Cargo](https://builtwithcargo.dev) and [Gift Vouchers](https://github.com/1994limited/gift-vouchers-statamic). Every screenshot in the Gift Vouchers docs comes from it. Run it to try Gift Vouchers before you build with it, or copy its templates.
 
-![Paper & Ink's gift voucher page, with the live preview](https://raw.githubusercontent.com/1994limited/gift-vouchers-statamic/main/docs/images/shop-voucher.png)
+![Paper & Ink's gift voucher page, with the live preview](https://raw.githubusercontent.com/1994limited/statamic-marketplace/main/gift-vouchers/charts/shop-voucher.png)
 
 It shows:
 
